@@ -4,7 +4,7 @@ from pydub import AudioSegment
 from pathlib import Path
 
 def convert_m4a_to_wav(categories):
-    base_path = Path('../Final Classifications')
+    base_path = Path('../archive')
     
     total_converted = 0
     
@@ -54,5 +54,5 @@ def convert_m4a_to_wav(categories):
 
 # Run the converter on specified categories
 if __name__ == "__main__":
-    categories = ['Music', 'Outdoors', 'Silent', 'Talking', 'Traffic']
+    categories = ['mySounds']
     convert_m4a_to_wav(categories)

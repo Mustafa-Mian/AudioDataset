@@ -49,5 +49,5 @@ def split_audio_files(source_dir, chunk_duration_ms=5000):
 
 # Run the splitter on ambientSounds directory
 if __name__ == "__main__":
-    ambient_sounds_dir = '../archive/ambientSounds'
+    ambient_sounds_dir = '../archive/mySounds'
     split_audio_files(ambient_sounds_dir)
