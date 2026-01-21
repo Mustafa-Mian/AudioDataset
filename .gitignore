@@ -1,3 +1,5 @@
 *.wav
+venv/
 .DS_Store
 c.py
+__pycache__/
