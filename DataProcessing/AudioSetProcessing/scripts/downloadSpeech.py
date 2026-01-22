@@ -16,6 +16,7 @@ Thanks to Aoife!
 
 import csv
 import os
+import subprocess
 from shutil import copyfile
 
 # defaults
@@ -57,11 +58,13 @@ def download(class_name, args,  max_downloads=None):
         for i, row in enumerate(reader):
             if max_downloads and i >= max_downloads:
                 break
-            # print command for debugging
-            print("ffmpeg -ss " + str(row[1]) + " -t 10 -i $(youtube-dl -f 'bestaudio' -g https://www.youtube.com/watch?v=" +
+            # Construct command with yt-dlp (maintains youtube-dl interface)
+            command = ("ffmpeg -ss " + str(row[1]) + " -t 10 -i $(yt-dlp -f 'bestaudio' -g https://www.youtube.com/watch?v=" +
                        str(row[0]) + ") -ar " + str(DEFAULT_FS) + " -- \"" + dst_dir + "/" + str(row[0]) + "_" + row[1] + ".wav\"")
-            os.system(("ffmpeg -ss " + str(row[1]) + " -t 10 -i $(youtube-dl -f 'bestaudio' -g https://www.youtube.com/watch?v=" +
-                       str(row[0]) + ") -ar " + str(DEFAULT_FS) + " -- \"" + dst_dir + "/" + str(row[0]) + "_" + row[1] + ".wav\""))
+            # print command for debugging
+            print(command)
+            # Use subprocess with shell=True to properly handle command substitution
+            subprocess.run(command, shell=True)
 
 
 def create_csv(class_name, args):
@@ -95,6 +98,7 @@ def create_csv(class_name, args):
     with open(csv_dataset) as dataset, open(new_csv_path, 'w', newline='') as new_csv:
         reader = csv.reader(dataset, skipinitialspace=True)
         writer = csv.writer(new_csv)
+        next(reader)  # Skip header row
 
         #  Include the row if it contains label for desired class and no labels of blacklisted classes
         to_write = [row for row in reader for label in label_id if label in row[3]
