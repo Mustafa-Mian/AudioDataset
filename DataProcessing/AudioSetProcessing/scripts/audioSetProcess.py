@@ -7,7 +7,7 @@ args = argparse.Namespace(
     destination_dir='../output',
     label_file='../data/class_labels_indices.csv',
     strict=False,
-    blacklist=['Music', 'Noise', 'Dog']
+    blacklist=['Noise', 'Dog']
 )
 
 # Download speech files
